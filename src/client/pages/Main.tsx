@@ -1,16 +1,25 @@
 import React from "react";
-import { Pod } from "../components/pod";
-import { useAppContext } from "../Context";
+import { Row } from "../components/Row";
+import { useMachine } from '@xstate/react';
+import { tickerMachine } from '../components/tickerMachine'
 
 const Main = () => {
-  const { name, setName } = useAppContext();
+  const [state, send] = useMachine(tickerMachine)
+  const { totalTicks, sequences, currentTick, playing } = state.context
+
+
   return (
-    <div className="flex bg-white-100 font-sans items-center flex-col justify-between h-screen">
-      <Pod
-        playing={true}
-        selectedToPlay={true}
-        position={0}
-      />
+    <div className="flex bg-white-100 font-sans items-center flex-col justify-between">
+      <button onClick={() => playing ? send('STOP') : send('PLAY')} >
+        {playing ? 'STOP' : 'PLAY'}
+      </button>
+      <button onClick={() => send('RESET')}>RESET</button>
+      {sequences.map((row, i) => (<Row
+        rowSequence={row}
+        rowIndex={i}
+        playingStep={currentTick}
+        key={`row-${i}`}
+      />))}
     </div>
   );
 };
