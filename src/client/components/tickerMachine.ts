@@ -34,7 +34,7 @@ export const tickerMachine =
 /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAYgCUBRAZQoBUBtABgF1FQAHAe1lwBddO+NiAAeiAIwBOAEwA6RgHYAHOOmSAbABZJkgKwBmZQBoQATwnSAvpZNoseQkVkAnAK758BKCSaskILh5+QWExBGlpcVlNJWVNfWl9dQVdJX0TcwRNCNkDSQV1SUZIhX1dXU1rWwwcAmIXd098b1oASQBhAGlfYUC+ASF-MKVGWQVxdSTNTXVEzUZDDMRpBUkx3XFGdXE0lU0KqpA7WsdZdnRXWEgfFl7ufpCh5cjo2KV4xOTU9LNEQ3VcuV5ox5lJNKprDYQPhOBA4MJjg5iHcggNQohNEsEFI5NJdDoFIwQREZEpDoi6k43B4vCiHoNQGFdNIsfoVLI2Zt9lJ8bpVuSakinOdLpA6cEGaI-oZcniJu8FCkFDNdFjwbpZNIFmz9uo9Up1LpIZYgA */
   createMachine<TimerContext, TimerEvent>({
     predictableActionArguments: true,
-    initial: "stopped",
+    initial: "paused",
     context: {
       currentTick: 0,
       totalTicks: 24,
