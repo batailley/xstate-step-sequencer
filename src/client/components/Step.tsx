@@ -8,6 +8,7 @@ export const Step = ({ playing=false, selectedToPlay=false, position=0, row=0 }:
    playing:boolean, selectedToPlay:boolean, position: number, row: number
 }) => {
   const [state, send] = useMachine(tickerMachine)
+  if (position === 1) { console.log('ping', position, playing, selectedToPlay); }
   return <div className={cn('pod',
     playing ? 'playing' : '',
     selectedToPlay ? 'selectedToPlay' : '',

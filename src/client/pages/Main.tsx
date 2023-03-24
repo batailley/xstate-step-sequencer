@@ -15,9 +15,7 @@ const Main = () => {
       </button>
       <button onClick={() => send('RESET')}>RESET</button>
       {sequences.map((row, i) => (<Row
-        rowSequence={row}
         rowIndex={i}
-        playingStep={currentTick}
         key={`row-${i}`}
       />))}
     </div>

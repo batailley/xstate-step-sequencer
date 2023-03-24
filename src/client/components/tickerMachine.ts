@@ -5,7 +5,7 @@ interface TimerContext {
   totalTicks: number;
   tickDuration: number;
   playing: boolean;
-  sequences: Array<Array<boolean>>;
+  sequences: boolean[][];
 }
 
 type activateTick = {
@@ -93,9 +93,9 @@ export const tickerMachine =
             console.log("event triggered", event.value);
             const { row, index } = event.value;
             const { sequences } = context;
-            const newSeq = sequences.map((s, idx) => (idx === row ? s.map((v, i) => (i === index ? !v : v)) : s));
-            console.log("new", newSeq);
-            return newSeq;
+            const newSeq = sequences?.map((s, idx) => (idx === row ? s.map((v, i) => (i === index ? !v : v)) : s)) ?? ;
+            console.log("new", newSeq[row][index]);
+            return  newSeq ;
           },
         }),
       },
