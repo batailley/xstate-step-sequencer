@@ -1,12 +1,12 @@
 import React from "react";
 import Main from "./pages/Main";
-import { ContextWrapper } from "./Context";
+import { GlobalStateContext } from "./globalState";
 
 export const App = () => {
   return (
-    <ContextWrapper>
+    <GlobalStateContext>
       <Main />
-    </ContextWrapper>
+    </GlobalStateContext>
   );
 };
 

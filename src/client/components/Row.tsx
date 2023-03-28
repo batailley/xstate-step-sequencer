@@ -1,7 +1,7 @@
 import { useMachine } from "@xstate/react";
 import React from "react";
 import { Step } from "./Step";
-import { tickerMachine } from "./tickerMachine";
+import { tickerMachine } from "../tickerMachine";
 
 export const Row = ({
   rowIndex = 0,
@@ -15,7 +15,7 @@ export const Row = ({
 
   return (
     <div className="flex flex-row">
-      {sequences[rowIndex].map((activated: boolean, index: number) => (
+      {sequences[rowIndex]?.map((activated: boolean, index: number) => (
         <Step
           key={`r${index}`}
           playing={!!(currentTick === index)}

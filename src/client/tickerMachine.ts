@@ -55,12 +55,12 @@ export const tickerMachine =
           },
         },
         on: {
-          "": {
+         /* "": {
             target: "paused",
             cond: context => {
               return !context.playing;
             },
-          },
+          },*/
           TICK: {
             actions: assign({
               currentTick: context => (context.currentTick + 1 > context.totalTicks ? 1 : context.currentTick + 1),
@@ -88,16 +88,18 @@ export const tickerMachine =
         }),
       },
       ACTIVATE: {
-        actions: assign({
-          sequences: (context, event) => {
-            console.log("event triggered", event.value);
-            const { row, index } = event.value;
-            const { sequences } = context;
-            const newSeq = sequences?.map((s, idx) => (idx === row ? s.map((v, i) => (i === index ? !v : v)) : s)) ?? ;
-            console.log("new", newSeq[row][index]);
-            return  newSeq ;
-          },
-        }),
+        actions: 'updateSequence',
       },
     },
+    actions: {
+      updateSequence: assign({
+        sequences: (context, event) => {
+          const { row, index } = event.value;
+          const { sequences } = context;
+          console.log("event triggered", event.value, sequences);
+          
+            return sequences.length > 0 ? sequences?.map((s, idx) => (idx === row ? s.map((v, i) => (i === index ? !v : v)) : s)) : [];
+        }
+      })
+    }
   });
