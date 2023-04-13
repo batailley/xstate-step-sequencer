@@ -1,12 +1,9 @@
 import React from "react";
-import Main from "./pages/Main";
-import { GlobalStateContext } from "./globalState";
+import { Main } from "./pages/Main";
 
 export const App = () => {
   return (
-    <GlobalStateContext>
       <Main />
-    </GlobalStateContext>
   );
 };
 

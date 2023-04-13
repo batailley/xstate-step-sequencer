@@ -6,6 +6,7 @@ interface TimerContext {
   tickDuration: number;
   playing: boolean;
   sequences: boolean[][];
+  activated: number[][];
 }
 
 type activateTick = {
@@ -55,12 +56,12 @@ export const tickerMachine =
           },
         },
         on: {
-         /* "": {
+         '': {
             target: "paused",
             cond: context => {
               return !context.playing;
             },
-          },*/
+          },
           TICK: {
             actions: assign({
               currentTick: context => (context.currentTick + 1 > context.totalTicks ? 1 : context.currentTick + 1),
@@ -88,18 +89,21 @@ export const tickerMachine =
         }),
       },
       ACTIVATE: {
-        actions: 'updateSequence',
-      },
-    },
-    actions: {
-      updateSequence: assign({
+        actions: [assign({
         sequences: (context, event) => {
           const { row, index } = event.value;
           const { sequences } = context;
-          console.log("event triggered", event.value, sequences);
-          
-            return sequences.length > 0 ? sequences?.map((s, idx) => (idx === row ? s.map((v, i) => (i === index ? !v : v)) : s)) : [];
+          const updatedSequences = sequences?.map((seq, idx) => (idx === row ? seq.map((value, i) => (i === index ? !value : value)) : seq)) 
+          console.log("event triggered", event.value, sequences.length, updatedSequences);
+          return sequences.length > 0 ? updatedSequences : [];
         }
-      })
-    }
+      }),
+        assign({
+            activated: (context, event) => {
+                const { row, index } = event.value;
+                const act = context.activated
+            }
+        })]
+      },
+    },
   });

@@ -1,24 +1,15 @@
-import { useMachine } from "@xstate/react";
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalStateContext } from "../pages/Main";
+import { useSelector } from "@xstate/react";
 import { Step } from "./Step";
-import { tickerMachine } from "../tickerMachine";
 
-export const Row = ({
-  rowIndex = 0,
-  rowSound = "",
-}: {
-  rowIndex: number;
-  rowSound?: string;
-}) => {
-  const [state, send] = useMachine(tickerMachine);
-  const { totalTicks, sequences, currentTick, playing } = state.context;
-
+export const Row = ({ rowIndex = 0, rowSound = "", row =[], currentTick = 0 }: { currentTick: number, row: boolean[], rowIndex: number; rowSound?: string }) => {
   return (
     <div className="flex flex-row">
-      {sequences[rowIndex]?.map((activated: boolean, index: number) => (
+      {row.map((activated: boolean, index: number) => (
         <Step
           key={`r${index}`}
-          playing={!!(currentTick === index)}
+          playing={(currentTick === index)}
           position={index}
           row={rowIndex}
           selectedToPlay={activated}
