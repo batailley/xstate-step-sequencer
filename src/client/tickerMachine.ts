@@ -42,6 +42,7 @@ export const tickerMachine =
       tickDuration: 700,
       playing: true,
       sequences: Array(3).fill(Array(24).fill(false)),
+      activated: [[], [], []],
     },
     states: {
       running: {
@@ -56,7 +57,7 @@ export const tickerMachine =
           },
         },
         on: {
-         '': {
+          "": {
             target: "paused",
             cond: context => {
               return !context.playing;
@@ -89,21 +90,16 @@ export const tickerMachine =
         }),
       },
       ACTIVATE: {
-        actions: [assign({
-        sequences: (context, event) => {
-          const { row, index } = event.value;
-          const { sequences } = context;
-          const updatedSequences = sequences?.map((seq, idx) => (idx === row ? seq.map((value, i) => (i === index ? !value : value)) : seq)) 
-          console.log("event triggered", event.value, sequences.length, updatedSequences);
-          return sequences.length > 0 ? updatedSequences : [];
-        }
-      }),
-        assign({
+        actions: [
+          assign({
             activated: (context, event) => {
-                const { row, index } = event.value;
-                const act = context.activated
-            }
-        })]
+              const { row, index } = event.value;
+              const act = context.activated;
+              act[row].push(index);
+              return act;
+            },
+          }),
+        ],
       },
     },
   });
