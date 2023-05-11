@@ -5,11 +5,15 @@
   border-radius: 4px;
   background-color: #DDD ;
   margin: 6px;
+  cursor:pointer;
   &.playing {
     background-color:aquamarine;
   }
   &.selectedToPlay {
     background-color:orange;
+  }
+  &.selectedToPlay.playing {
+    background-color:red;;
   }
   & span {
     position: absolute;

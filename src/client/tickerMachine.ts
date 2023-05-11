@@ -39,7 +39,7 @@ export const tickerMachine =
     context: {
       currentTick: 0,
       totalTicks: 24,
-      tickDuration: 700,
+      tickDuration: 300,
       playing: true,
       sequences: Array(3).fill(Array(24).fill(false)),
       activated: [[], [], []],
@@ -56,13 +56,19 @@ export const tickerMachine =
             };
           },
         },
-        on: {
-          "": {
+        always: {
             target: "paused",
             cond: context => {
               return !context.playing;
             },
-          },
+        },
+        on: {
+          /*"": {
+            target: "paused",
+            cond: context => {
+              return !context.playing;
+            },
+          }, */
           TICK: {
             actions: assign({
               currentTick: context => (context.currentTick + 1 > context.totalTicks ? 1 : context.currentTick + 1),
@@ -95,7 +101,11 @@ export const tickerMachine =
             activated: (context, event) => {
               const { row, index } = event.value;
               const act = context.activated;
-              act[row].push(index);
+              if (act[row].includes(index)) {
+                act[row] = act[row].filter((activated) => activated !== index)
+              } else {
+                act[row].push(index);
+              }
               return act;
             },
           }),
